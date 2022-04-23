@@ -4,8 +4,8 @@ using Classes.Enums;
 using Classes.Helpers;
 
 Console.WriteLine("\nFind and print all persons firstnames starting with 'R', ordered by Age - DESCENDING ORDER");
-List<Person> task1 = DB.People
-    .OrderByDescending(x => x.Age).Where(y => y.FirstName.Substring(0, 1) == "R").ToList();
+List<Person> task1 = DB.People.OrderByDescending(x => x.Age)
+                              .Where(y => y.FirstName.Substring(0, 1) == "R").ToList();
 task1.PrintEntities();
 
 
@@ -43,8 +43,7 @@ task6.PrintSimple();
 
 
 Console.WriteLine("\nFind and print all persons firstnames with job developer, don't have dogs and are younger than 25 years, order by age - ASCENDING ORDER");
-List<Person> task7 = DB.People.OrderBy(x => x.Age).Where(y => y.Age < 25 && y.Occupation == Job.Developer && y.Dogs.Count() == 0).ToList();
-task7.PrintEntities();
+DB.People.OrderBy(x => x.Age).Where(y => y.Age < 25 && y.Occupation == Job.Developer && y.Dogs.Count() == 0).ToList().PrintEntities();
 
 
 
@@ -55,13 +54,13 @@ Console.WriteLine(task8);
 
 
 Console.WriteLine("\nFind and print all Freddy Gordin's dogs from race boxer and bulldog older than 1 year, ordered by name - DESCENDING ORDER");
-List<Dog> task9 = DB.People.FirstOrDefault(a => a.FirstName == "Freddy" && a.LastName == "Gordon").Dogs
-                              .Where(b => (b.Race == Race.Boxer || b.Race == Race.Bulldog) && b.Age > 1)
-                              .OrderByDescending(d => d.Name).ToList();
-task9.PrintEntities();
+DB.People.FirstOrDefault(a => a.FirstName == "Freddy" && a.LastName == "Gordon").Dogs
+                           .Where(b => (b.Race == Race.Boxer || b.Race == Race.Bulldog) && b.Age > 1)
+                           .OrderByDescending(d => d.Name).ToList().PrintEntities();
 
 
 Console.WriteLine("\nFind and print all white dogs names from Cristofer, Freddy, Erin and Amelia, ordered by Name - ASCENDING ORDER");
-List<Dog> task11 = DB.People.Where(a => a.FirstName == "Freddy" || a.FirstName == "Erin" || a.FirstName == "Amelia" || a.FirstName == "Cristofer")
-    .SelectMany(t => t.Dogs).OrderBy(b => b.Name).Where(c => c.Color == "White").ToList();
-task11.PrintEntities();
+DB.People.Where(a => a.FirstName == "Freddy" || a.FirstName == "Erin" || a.FirstName == "Amelia" || a.FirstName == "Cristofer")
+                            .SelectMany(t => t.Dogs)
+                            .OrderBy(b => b.Name)
+                            .Where(c => c.Color == "White").ToList().PrintEntities();
